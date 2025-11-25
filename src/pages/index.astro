@@ -1,24 +1,139 @@
 ---
+import { BloodSugar } from "../components/BloodSugar";
+import type { BGData } from "@/types";
+
 // Component Imports
-import Button from '../components/Button.astro';
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
+
+let bgData = await fetch("https://bg.harbar2021.workers.dev/").then((r) => {
+    if (!r.ok) {
+        return Promise.resolve({
+            value: NaN,
+            trend: "none",
+            displayTime: new Date().toISOString(),
+        } as BGData);
+    }
+
+    return r.json() as Promise<BGData>;
+});
+
+function calculateBgColor(num: number) {
+    const MIN_NUMBER = 40;
+    const MAX_NUMBER = 400;
+
+    const GREEN_START = 90;
+    const GREEN_END = 120;
+
+    const HUE_RED = 0;
+    const HUE_GREEN = 120;
+
+    let hue;
+
+    if (num >= GREEN_START && num <= GREEN_END) {
+        hue = HUE_GREEN;
+    } else if (num < GREEN_START) {
+        const rangeSize = GREEN_START - MIN_NUMBER;
+        const hueRangeSize = HUE_GREEN - HUE_RED;
+        const progress = (num - MIN_NUMBER) / rangeSize;
+        hue = HUE_RED + progress * hueRangeSize;
+    } else {
+        const rangeSize = MAX_NUMBER - GREEN_END;
+        const hueRangeSize = HUE_GREEN - HUE_RED;
+        const progress = (num - GREEN_END) / rangeSize;
+        hue = HUE_GREEN - progress * hueRangeSize;
+    }
+
+    hue = Math.max(0, Math.min(360, hue));
+
+    // Define thresholds and corresponding Tailwind classes
+    // These are approximations; you might need to tweak them
+    if (hue >= 90 && hue <= 150) {
+        return "text-green-500"; // Close to HUE_GREEN (120)
+    } else if ((hue > 60 && hue < 90) || (hue > 150 && hue < 240)) {
+        return "text-yellow-400"; // Close to HUE_YELLOW (60)
+    } else if ((hue > 50 && hue <= 60) || (hue >= 240 && hue < 300)) {
+        return "text-orange-400"; // Close to HUE_ORANGE (30)
+    } else {
+        return "text-red-500"; // Close to HUE_RED (0/360)
+    }
+}
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + TailwindCSS</title>
-	</head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>Harshith Iyer | harbar20</title>
+    </head>
 
-	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Tailwind Button in Astro!</Button>
-			<a href="/markdown-page" class="p-4 underline">Markdown is also supported...</a>
-		</div>
-	</body>
+    <body class="h-dvh overflow-hidden bg-black text-white font-bold">
+        <div class="h-full flex flex-col mx-32">
+            <div id="title" class="flex flex-row gap-2 mt-32 p-2">
+                <img
+                    src="/me.jpeg"
+                    alt="Harshith Iyer"
+                    class="size-64 rounded-full"
+                />
+                <div class="flex flex-col gap-0.5 px-8 py-2">
+                    <h1 class="text-7xl">Harshith Iyer</h1>
+                    <h3 class="text-3xl">Software Engineer</h3>
+                    <div class="flex flex-row divide-x-2 pl-0.5">
+                        <div class="flex flex-row gap-1">
+                            <p>E</p>
+                            <p>G</p>
+                            <p>T</p>
+                            <p>I</p>
+                            <p>R</p>
+                            <p>B</p>
+                            <p>L</p>
+                        </div>
+                        <BloodSugar
+                            client:load
+                            bgData={bgData}
+                            color={calculateBgColor(bgData.value)}
+                        />
+                    </div>
+                    <p>
+                        Hi! I'm a software engineer
+                    </p>
+                </div>
+            </div>
+            <section class={`w-full flex-grow grid grid-cols-12 gap-4 p-4`}>
+                <div
+                    class={`col-span-6 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                >
+                    Widget 1
+                </div>
+                <div
+                    class={`col-span-4 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                >
+                    Widget 2
+                </div>
+                <div
+                    class={`col-span-2 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                >
+                    Widget 3
+                </div>
+                <div
+                    class={`col-span-4 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                >
+                    Widget 4
+                </div>
+                <div
+                    class={`col-span-6 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                >
+                    Widget 5
+                </div>
+                <div
+                    class={`col-span-2 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                >
+                    Widget 6
+                </div>
+            </section>
+        </div>
+    </body>
 </html>
