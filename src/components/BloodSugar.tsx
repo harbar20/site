@@ -51,6 +51,7 @@ export function BloodSugar({
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Button className={color}>
+                    🩸
                         {isNaN(bgData.value) ? "Error" : bgData.value}
                         {directions[bgData.trend]}
                     </Button>
