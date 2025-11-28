@@ -16,7 +16,7 @@ let bgData = await fetch("https://bg.harbar2021.workers.dev/").then((r) => {
         } as BGData);
     }
 
-    return r.json() as Promise<BGData>;
+    return r.json();
 });
 
 function calculateBgColor(num: number) {
@@ -70,13 +70,15 @@ function calculateBgColor(num: number) {
         <title>Harshith Iyer | harbar20</title>
     </head>
 
-    <body class="h-dvh overflow-hidden bg-black text-white font-bold">
-        <div class="h-full flex flex-col mx-32">
-            <div id="title" class="flex flex-row gap-2 mt-32 p-2">
+    <body
+        class="flex items-center justify-center bg-black font-bold text-white"
+    >
+        <div class="flex h-full max-w-screen-lg flex-col overflow-hidden pt-8">
+            <div id="title" class="flex flex-row gap-2">
                 <img
                     src="/me.jpeg"
                     alt="Harshith Iyer"
-                    class="size-64 rounded-full"
+                    class="size-48 rounded-full"
                 />
                 <div class="flex flex-col gap-0.5 px-8 py-2">
                     <h1 class="text-7xl">Harshith Iyer</h1>
@@ -97,41 +99,95 @@ function calculateBgColor(num: number) {
                             color={calculateBgColor(bgData.value)}
                         />
                     </div>
-                    <p>
-                        Hi! I'm a software engineer
-                    </p>
+                    <div class="font-semibold">
+                        <p>Software Engineer</p>
+                        <p>
+                            Worcester Polytechnic Institute <span
+                                class="font-light">CS '25</span>
+                        </p>
+                        <p>prev. @Verizon @JahnelGroup</p>
+                    </div>
                 </div>
             </div>
-            <section class={`w-full flex-grow grid grid-cols-12 gap-4 p-4`}>
+            <section class={`w-full flex-grow grid grid-cols-12 gap-2 pt-4`}>
                 <div
-                    class={`col-span-6 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                    class={`col-span-8 bg-red-500 bg-opacity-20 border-2 border-red-500 rounded-xl p-2`}
                 >
-                    Widget 1
+                    <h3 class="text-2xl">Verizon Family Line</h3>
+                    <p class="font-normal">
+                        Tested and deployed the Family Line feature of the
+                        Verizon Family app.
+                    </p>
                 </div>
                 <div
-                    class={`col-span-4 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                    class={`col-span-4 bg-green-500 bg-opacity-20 border-2 border-green-500 rounded-xl p-2`}
                 >
-                    Widget 2
+                    <h3 class="text-2xl">Fidelity FMT</h3>
+                    <p class="font-normal">
+                        Prototyped and built a data analytics platform for
+                        Fidelity's customer data. Analyzed Fidelity customer and
+                        US Census data to find areas for expansion.
+                    </p>
                 </div>
                 <div
-                    class={`col-span-2 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                    class={`col-span-4 bg-orange-500 bg-opacity-20 border-2 border-yellow-500 rounded-xl p-2`}
                 >
-                    Widget 3
+                    <h3 class="text-2xl">Basketball Win Prediction AI</h3>
+                    <p class="font-normal">
+                        Built and trained multiple AI models using various
+                        algorithms to predict the results of future NBA
+                        matchups.
+                    </p>
                 </div>
                 <div
-                    class={`col-span-4 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                    class={`col-span-8 bg-purple-500 bg-opacity-20 border-2 border-purple-500 rounded-xl p-2`}
                 >
-                    Widget 4
+                    <h3 class="text-2xl">Calendar App</h3>
+                    <p class="font-normal">
+                        Built a calendar app with a todo list, because no
+                        existing calendar app was good enough.
+                    </p>
                 </div>
                 <div
-                    class={`col-span-6 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                    class={`col-span-7 bg-blue-500 bg-opacity-20 border-2 border-blue-500 rounded-xl p-2`}
                 >
-                    Widget 5
+                    <h3 class="text-2xl">
+                        Brigham & Women's Hospital Map Application
+                    </h3>
+                    <p class="font-normal">
+                        Led a 10-person team to build a full-stack map
+                        application designed for use in a hospital.
+                    </p>
                 </div>
                 <div
-                    class={`col-span-2 bg-red-500 bg-opacity-10 border-2 border-red-500 rounded-lg flex items-center justify-center text-2xl`}
+                    class={`col-span-5 bg-pink-500 bg-opacity-20 border-2 border-pink-500 rounded-xl p-2`}
                 >
-                    Widget 6
+                    <h3 class="text-2xl">Porygon</h3>
+                    <p class="font-normal">
+                        Built and scaled a Discord bot that analyzes Pokemon
+                        battles. Used by 1,500+ servers and 100,000+ users.
+                    </p>
+                </div>
+                <div
+                    class={`col-span-3 bg-cyan-500 bg-opacity-20 border-2 border-cyan-500 rounded-xl p-2`}
+                >
+                    <h3 class="text-2xl">Privia</h3>
+                    <p class="font-normal">
+                        Built an internal prototype Trivia application for
+                        Jahnel Group.
+                    </p>
+                </div>
+                <div
+                    class={`col-span-9 bg-lime-500 bg-opacity-20 border-2 border-lime-500 rounded-xl p-2`}
+                >
+                    <h3 class="text-2xl">CHUV Inclusive Village Project</h3>
+                    <p class="font-normal">
+                        Researched and wrote a 100+ page report on
+                        state-of-the-art solutions around the world to housing
+                        and treating people recovering from severe neurolesions
+                        for Centre Hospitalier Universitaire Vaudois in
+                        Lausanne, Switzerland.
+                    </p>
                 </div>
             </section>
         </div>

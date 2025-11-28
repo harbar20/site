@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from "astro:content";
+import {colorStyles} from "@/types"
+interface Props {
+    project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props as Props;
+
+const baseStyle = "col-span-2 row-span-2 rounded-3xl flex flex-col gap-2 p-4 bg-opacity-20 border-2";
+const projectColorStyle = colorStyles[project.data.color] || ""; // Fallback for safety
+
+const style = `${baseStyle} ${projectColorStyle}`;
+---
+
+<div    
+    class={style}
+    id={project.id}
+>
+    <h6 class="text-2xl">{project.data.name}</h6>
+    <p class="text-sm font-semibold">{project.data.desc}</p>
+</div>
